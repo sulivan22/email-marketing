@@ -1,0 +1,8 @@
+para enviar 
+
+python3 enviar_newsletter.py 
+
+
+mails.txt/alboroto.txt contiene los emails a enviar
+errores.log los errores que dan
+enviados.log los emails enviados

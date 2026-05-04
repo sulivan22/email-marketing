@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Email Marketing{% endblock %}
+
+{% block content %}
+<div class="dashboard">
+    <div class="left-panel">
+        <h2>🚀 Send Newsletter</h2>
+
+        <form id="sendForm" enctype="multipart/form-data">
+            <fieldset>
+                <legend>Upload Files</legend>
+
+                <div class="form-group">
+                    <label for="template">HTML Template (optional, defaults to app.html)</label>
+                    <input type="file" id="template" name="template" accept=".html" />
+                    <small>Leave empty to use default template</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="contacts">Contact List (optional, defaults to mails.txt)</label>
+                    <input type="file" id="contacts" name="contacts" accept=".txt" />
+                    <small>Plain text with emails (one per line or comma-separated)</small>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Batch Settings</legend>
+
+                <div class="form-group">
+                    <label for="batchSize">Batch Size (emails per batch)</label>
+                    <input type="number" id="batchSize" name="batchSize" value="50" min="1" max="500" />
+                </div>
+
+                <div class="form-group">
+                    <label for="batchDelay">Batch Delay (seconds between batches)</label>
+                    <input type="number" id="batchDelay" name="batchDelay" value="30" min="1" max="300" />
+                </div>
+            </fieldset>
+
+            <button type="submit" class="btn btn-primary">👁️ Preview Email</button>
+        </form>
+
+        <div id="error-message" class="error-box" style="display:none;"></div>
+    </div>
+
+    <div class="right-panel">
+        <h2>📊 Quick Stats</h2>
+        <div class="stats-box">
+            <div class="stat-item">
+                <span class="stat-label">Total Sent (All Time)</span>
+                <span class="stat-value" id="totalSent">-</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Total Errors (All Time)</span>
+                <span class="stat-value" id="totalErrors">-</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Success Rate</span>
+                <span class="stat-value" id="successRate">-</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Total Batches</span>
+                <span class="stat-value" id="totalBatches">-</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Load stats on page load
+    fetch('/api/stats')
+        .then(r => r.json())
+        .then(data => {
+            document.getElementById('totalSent').textContent = data.total_sent || 0;
+            document.getElementById('totalErrors').textContent = data.total_errors || 0;
+            document.getElementById('successRate').textContent = data.success_rate + '%' || '-';
+            document.getElementById('totalBatches').textContent = data.total_batches || 0;
+        })
+        .catch(e => console.error('Error loading stats:', e));
+
+    // Handle form submission
+    document.getElementById('sendForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const formData = new FormData(this);
+
+        fetch('/preview', { method: 'POST', body: formData })
+            .then(r => r.text())
+            .then(html => {
+                document.body.innerHTML = html;
+            })
+            .catch(e => {
+                document.getElementById('error-message').style.display = 'block';
+                document.getElementById('error-message').textContent = 'Error: ' + e;
+            });
+    });
+});
+</script>
+{% endblock %}

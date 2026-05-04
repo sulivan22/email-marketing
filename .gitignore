@@ -1,11 +1,16 @@
-# Variables de entorno
+# Variables de entorno - SECRETOS
 .env
 .env.local
 .env.*.local
 
-
-# Logs y resultados
+# Logs en tiempo de ejecución
 *.log
+logs/
+
+# Virtual environments
+venv/
+env/
+ENV/
 
 # IDE
 .vscode/
@@ -21,21 +26,18 @@ __pycache__/
 *.egg-info/
 dist/
 build/
+.pytest_cache/
 
 # OS
 .DS_Store
 Thumbs.db
 
-# emails
-emails
+# Datos de producción - NO subir listas reales de emails
+contactos/
+mails.txt
 
-# contactos
-contactos
-
-#claude
-.claude
-CLAUDE.md
-REDME.txt
+# Claude local files
+.claude/
 
 
 

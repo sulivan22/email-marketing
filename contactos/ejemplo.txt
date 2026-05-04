@@ -1,0 +1,8 @@
+# Este es un archivo de ejemplo para el formato de contactos
+# Cada línea debe contener un email válido
+
+usuario1@ejemplo.com
+usuario2@ejemplo.com
+usuario3@ejemplo.com
+usuario4@ejemplo.com
+usuario5@ejemplo.com

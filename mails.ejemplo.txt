@@ -1,0 +1,9 @@
+# Archivo de ejemplo para las listas de emails a enviar
+# Puedes usar cualquiera de estos formatos:
+# - Un email por línea
+# - Emails separados por comas
+# - Mix de ambos
+
+contacto1@ejemplo.com
+contacto2@ejemplo.com
+contacto3@ejemplo.com

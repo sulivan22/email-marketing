@@ -51,8 +51,57 @@ def index():
 
 @app.route('/preview', methods=['POST'])
 def preview():
-    # Placeholder: will implement in next task
-    return "Preview route"
+    """Display email preview before sending"""
+    try:
+        # Get template file
+        template_file = request.files.get('template')
+        if template_file and template_file.filename:
+            # Save uploaded template
+            filename = secure_filename(template_file.filename)
+            template_path = os.path.join(app.config['UPLOAD_FOLDER'], 'templates', filename)
+            template_file.save(template_path)
+            html_content = read_html_template(template_path)
+        else:
+            # Use default template
+            template_path = 'app.html'
+            html_content = read_html_template(template_path)
+
+        if not html_content:
+            return redirect(url_for('index'))
+
+        # Get contacts file
+        contacts_file = request.files.get('contacts')
+        if contacts_file and contacts_file.filename:
+            # Save uploaded contacts
+            filename = secure_filename(contacts_file.filename)
+            contacts_path = os.path.join(app.config['UPLOAD_FOLDER'], 'contacts', filename)
+            contacts_file.save(contacts_path)
+            contacts = read_contacts_from_file(contacts_path)
+        else:
+            # Use default contacts
+            contacts_path = 'mails.txt'
+            contacts = read_contacts_from_file(contacts_path)
+
+        if not contacts:
+            return redirect(url_for('index'))
+
+        # Get batch settings
+        batch_size = request.form.get('batchSize', '50')
+        batch_delay = request.form.get('batchDelay', '30')
+
+        return render_template('preview.html',
+                             html_content=html_content,
+                             first_contact=contacts[0],
+                             total_contacts=len(contacts),
+                             email_from=os.getenv('EMAIL_FROM_ADDRESS', 'travel@esimjourney.com'),
+                             email_subject=os.getenv('EMAIL_SUBJECT', 'Stay connected anywhere'),
+                             template_path=template_path,
+                             contacts_path=contacts_path,
+                             batch_size=batch_size,
+                             batch_delay=batch_delay)
+
+    except Exception as e:
+        return f"Error in preview: {str(e)}", 400
 
 @app.route('/send', methods=['POST'])
 def send():

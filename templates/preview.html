@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Email Preview - Email Marketing{% endblock %}
+
+{% block content %}
+<div class="preview-page">
+    <div class="preview-header">
+        <h2>👁️ Email Preview</h2>
+        <p class="preview-info">
+            Previewing email for: <strong>{{ first_contact }}</strong>
+            <br>
+            Total contacts: <strong>{{ total_contacts }}</strong>
+        </p>
+    </div>
+
+    <div class="preview-container">
+        <div class="email-envelope">
+            <div class="email-header">
+                <p><strong>From:</strong> {{ email_from }}</p>
+                <p><strong>To:</strong> {{ first_contact }}</p>
+                <p><strong>Subject:</strong> {{ email_subject }}</p>
+            </div>
+            <div class="email-body">
+                {{ html_content | safe }}
+            </div>
+        </div>
+    </div>
+
+    <div class="preview-actions">
+        <form method="POST" action="/send" style="display: inline;">
+            <input type="hidden" name="template_path" value="{{ template_path }}" />
+            <input type="hidden" name="contacts_path" value="{{ contacts_path }}" />
+            <input type="hidden" name="batch_size" value="{{ batch_size }}" />
+            <input type="hidden" name="batch_delay" value="{{ batch_delay }}" />
+            <button type="submit" class="btn btn-success">✅ Send Now</button>
+        </form>
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">← Back to Dashboard</a>
+    </div>
+</div>
+{% endblock %}

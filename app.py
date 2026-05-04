@@ -4,6 +4,7 @@ import re
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from werkzeug.utils import secure_filename
 from dotenv import load_dotenv
+from log_parser import LogParser
 
 load_dotenv()
 
@@ -138,8 +139,18 @@ def send():
 
 @app.route('/status')
 def status():
-    # Placeholder: will implement in next task
-    return "Status route"
+    """Show send status and progress"""
+    return render_template('status.html')
+
+@app.route('/api/status')
+def api_status():
+    """API endpoint for status updates (polls log files)"""
+    try:
+        parser = LogParser()
+        stats = parser.get_statistics()
+        return jsonify(stats)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/history')
 def history():

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Send History - Email Marketing{% endblock %}
+
+{% block content %}
+<div class="history-page">
+    <h2>📜 Send History</h2>
+
+    {% if history %}
+    <table class="history-table">
+        <thead>
+            <tr>
+                <th>Date/Time</th>
+                <th>Sent</th>
+                <th>Failed</th>
+                <th>Total</th>
+                <th>Success Rate</th>
+                <th>Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in history %}
+            <tr>
+                <td>{{ item.timestamp }}</td>
+                <td class="sent">{{ item.sent }}</td>
+                <td class="failed">{{ item.failed }}</td>
+                <td>{{ item.total }}</td>
+                <td>
+                    <span class="badge {% if item.success_rate >= 95 %}badge-success{% elif item.success_rate >= 80 %}badge-warning{% else %}badge-danger{% endif %}">
+                        {{ item.success_rate }}%
+                    </span>
+                </td>
+                <td>
+                    {% if item.failed_emails %}
+                    <details>
+                        <summary>Show Failed Emails ({{ item.failed|length }})</summary>
+                        <ul>
+                            {% for email in item.failed_emails %}
+                            <li>{{ email }}</li>
+                            {% endfor %}
+                        </ul>
+                    </details>
+                    {% else %}
+                    <span class="text-muted">—</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="empty-state">📭 No send history yet. Send your first newsletter!</p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -154,8 +154,23 @@ def api_status():
 
 @app.route('/history')
 def history():
-    # Placeholder: will implement in next task
-    return "History route"
+    """Display send history from logs"""
+    try:
+        parser = LogParser()
+        history_data = parser.get_history()
+        return render_template('history.html', history=history_data)
+    except Exception as e:
+        return f"Error loading history: {str(e)}", 500
+
+@app.route('/api/stats')
+def api_stats():
+    """API endpoint for statistics"""
+    try:
+        parser = LogParser()
+        stats = parser.get_statistics()
+        return jsonify(stats)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True, host='localhost', port=5000)

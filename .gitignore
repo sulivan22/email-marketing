@@ -3,6 +3,7 @@
 .env.local
 .env.*.local
 
+
 # Logs y resultados
 *.log
 
@@ -30,5 +31,11 @@ emails
 
 # contactos
 contactos
+
+#claude
+.claude
+CLAUDE.md
+REDME.txt
+
 
 

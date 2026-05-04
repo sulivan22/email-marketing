@@ -15,7 +15,7 @@ Herramienta segura y configurable para enviar campañas de email masivo mediante
 
 ### 1. Clonar el repositorio
 ```bash
-git clone https://github.com/tu-usuario/email-marketing.git
+git clone https://github.com/sulivan22/email-marketing.git
 cd email-marketing
 ```
 
@@ -51,15 +51,12 @@ email-marketing/
 ├── .gitignore                # Protege secretos
 ├── requirements.txt          # Dependencias Python
 ├── SETUP.md                  # Guía detallada de setup
-├── CLAUDE.md                 # Documentación técnica
 ├── app.html                  # Plantilla HTML principal
 ├── emails/                   # Plantillas HTML adicionales
 │   ├── newsletter.html
-│   ├── newsletter-2.html
-│   └── ig.html
 ├── contactos/                # Listas de contactos
-│   ├── alboroto.txt
-│   └── esimUser.txt
+│   ├── campaña1.txt
+│   └── campaña2.txt
 └── mails.txt                 # Destinatarios actuales
 ```
 

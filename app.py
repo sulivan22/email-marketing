@@ -105,8 +105,36 @@ def preview():
 
 @app.route('/send', methods=['POST'])
 def send():
-    # Placeholder: will implement in next task
-    return "Send route"
+    """Launch email sending in background"""
+    try:
+        template_path = request.form.get('template_path')
+        contacts_path = request.form.get('contacts_path')
+        batch_size = request.form.get('batch_size', '50')
+        batch_delay = request.form.get('batch_delay', '30')
+
+        # Validate files exist
+        if not os.path.exists(template_path) or not os.path.exists(contacts_path):
+            return "Files not found", 400
+
+        # Build environment for subprocess
+        env = os.environ.copy()
+        env['HTML_TEMPLATE_FILE'] = template_path
+        env['MAIL_LIST_FILE'] = contacts_path
+        env['BATCH_SIZE'] = batch_size
+        env['BATCH_DELAY_SECONDS'] = batch_delay
+
+        # Launch subprocess in background (non-blocking)
+        subprocess.Popen(
+            ['python', 'enviar_newsletter.py'],
+            env=env,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL
+        )
+
+        return redirect(url_for('status'))
+
+    except Exception as e:
+        return f"Error launching send: {str(e)}", 500
 
 @app.route('/status')
 def status():

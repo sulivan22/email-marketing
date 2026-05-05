@@ -33,11 +33,10 @@ build/
 Thumbs.db
 
 # Datos de producción - NO subir listas reales de emails
-contactos/
-emails/
-uploads/*
-templates/
-docs/
+contactos
+emails
+uploads
+docs
 
 # Claude local files
 .claude/

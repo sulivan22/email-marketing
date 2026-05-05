@@ -86,11 +86,11 @@ def registrar(mensaje, nivel="INFO"):
     print(f"[{timestamp}] {prefijo.get(nivel, '•')} {mensaje}")
 
 # === CONFIGURACIÓN DEL CORREO ===
-email_from_name = os.getenv("EMAIL_FROM_NAME", "eSimJourney.com")
-email_from_address = os.getenv("EMAIL_FROM_ADDRESS", "travel@esimjourney.com")
-email_subject = os.getenv("EMAIL_SUBJECT", "Stay connected anywhere — Download the app today")
-batch_size = int(os.getenv("BATCH_SIZE", "50"))
-batch_delay = int(os.getenv("BATCH_DELAY_SECONDS", "30"))
+email_from_name = os.getenv("EMAIL_FROM_NAME")
+email_from_address = os.getenv("EMAIL_FROM_ADDRESS")
+email_subject = os.getenv("EMAIL_SUBJECT")
+batch_size = int(os.getenv("BATCH_SIZE"))
+batch_delay = int(os.getenv("BATCH_DELAY_SECONDS"))
 
 # === ENVÍO POR BLOQUES ===
 enviados = []

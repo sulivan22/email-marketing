@@ -1,24 +1,23 @@
 {% extends "base.html" %}
 
-{% block title %}Email Preview - Email Marketing{% endblock %}
+{% block title %}Previsualización - Email Marketing{% endblock %}
 
 {% block content %}
 <div class="preview-page">
     <div class="preview-header">
-        <h2>👁️ Email Preview</h2>
+        <h2>👁️ Previsualización del Email</h2>
         <p class="preview-info">
-            Previewing email for: <strong>{{ first_contact }}</strong>
-            <br>
-            Total contacts: <strong>{{ total_contacts }}</strong>
+            <strong>Para:</strong> {{ first_contact }}<br>
+            <strong>Total de contactos:</strong> {{ total_contacts }}
         </p>
     </div>
 
     <div class="preview-container">
         <div class="email-envelope">
             <div class="email-header">
-                <p><strong>From:</strong> {{ email_from }}</p>
-                <p><strong>To:</strong> {{ first_contact }}</p>
-                <p><strong>Subject:</strong> {{ email_subject }}</p>
+                <p><strong>De:</strong> {{ email_from }}</p>
+                <p><strong>Para:</strong> {{ first_contact }}</p>
+                <p><strong>Asunto:</strong> {{ email_subject }}</p>
             </div>
             <div class="email-body">
                 {{ html_content | safe }}
@@ -32,9 +31,9 @@
             <input type="hidden" name="contacts_path" value="{{ contacts_path }}" />
             <input type="hidden" name="batch_size" value="{{ batch_size }}" />
             <input type="hidden" name="batch_delay" value="{{ batch_delay }}" />
-            <button type="submit" class="btn btn-success">✅ Send Now</button>
+            <button type="submit" class="btn btn-success">✅ Enviar Ahora</button>
         </form>
-        <a href="{{ url_for('index') }}" class="btn btn-secondary">← Back to Dashboard</a>
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">← Volver al Dashboard</a>
     </div>
 </div>
 {% endblock %}

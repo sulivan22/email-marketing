@@ -1,37 +1,37 @@
-// Form validation
+// ===== FORM VALIDATION & INTERACTION =====
 document.addEventListener('DOMContentLoaded', function() {
     const forms = document.querySelectorAll('form');
 
     forms.forEach(form => {
         form.addEventListener('submit', function(e) {
-            // Basic validation
-            const templateInput = form.querySelector('input[name="template"]');
-            const contactsInput = form.querySelector('input[name="contacts"]');
-
-            // At least one file can be empty (uses defaults)
-            // But we could add more validation here if needed
-
-            console.log('Form submitted');
+            const buttons = form.querySelectorAll('button');
+            buttons.forEach(btn => {
+                btn.style.opacity = '0.6';
+                btn.style.pointerEvents = 'none';
+            });
         });
     });
 });
 
-// Auto-hide error messages after 5 seconds
+// ===== AUTO-HIDE ERRORS =====
 function autoHideErrors() {
     const errorBoxes = document.querySelectorAll('.error-box');
     errorBoxes.forEach(box => {
         if (box.style.display !== 'none') {
             setTimeout(() => {
-                box.style.display = 'none';
+                box.style.opacity = '0';
+                box.style.transform = 'translateY(-10px)';
+                setTimeout(() => {
+                    box.style.display = 'none';
+                }, 300);
             }, 5000);
         }
     });
 }
 
-// Call on page load
 document.addEventListener('DOMContentLoaded', autoHideErrors);
 
-// Utility: Format file size for display
+// ===== FILE INPUT ENHANCEMENTS =====
 function formatFileSize(bytes) {
     if (bytes === 0) return '0 Bytes';
     const k = 1024;
@@ -40,7 +40,6 @@ function formatFileSize(bytes) {
     return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
 }
 
-// File input labels with file size
 document.addEventListener('DOMContentLoaded', function() {
     const fileInputs = document.querySelectorAll('input[type="file"]');
 
@@ -48,20 +47,30 @@ document.addEventListener('DOMContentLoaded', function() {
         input.addEventListener('change', function() {
             if (this.files && this.files[0]) {
                 const file = this.files[0];
-                const sizeText = ' (' + formatFileSize(file.size) + ')';
-                console.log('File selected: ' + file.name + sizeText);
+                const label = this.parentElement.querySelector('label');
+                if (label) {
+                    label.innerHTML = `
+                        <span>📎</span> ${file.name}
+                        <small style="display: block; margin-top: 0.25rem;">
+                            Tamaño: ${formatFileSize(file.size)}
+                        </small>
+                    `;
+                    label.style.color = 'var(--success-color)';
+                    label.style.fontWeight = '600';
+                }
             }
         });
     });
 });
 
-// Prevent accidental form resubmission
+// ===== PREVENT ACCIDENTAL FORM RESUBMISSION =====
 function disableFormOnSubmit(form) {
     form.addEventListener('submit', function() {
         const buttons = form.querySelectorAll('button');
         buttons.forEach(btn => {
             btn.disabled = true;
-            btn.textContent = 'Processing...';
+            btn.textContent = '⏳ Procesando...';
+            btn.style.opacity = '0.7';
         });
     });
 }
@@ -70,3 +79,60 @@ document.addEventListener('DOMContentLoaded', function() {
     const forms = document.querySelectorAll('form');
     forms.forEach(disableFormOnSubmit);
 });
+
+// ===== SMOOTH PAGE TRANSITIONS =====
+function addPageTransition() {
+    const links = document.querySelectorAll('a[href^="/"]');
+    links.forEach(link => {
+        link.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (!href.includes('#') && !href.startsWith('javascript:')) {
+                e.preventDefault();
+                document.body.style.opacity = '0.95';
+                document.body.style.transform = 'translateY(5px)';
+                setTimeout(() => {
+                    window.location.href = href;
+                }, 150);
+            }
+        });
+    });
+}
+
+document.addEventListener('DOMContentLoaded', addPageTransition);
+
+// ===== TABLE ROW HOVER EFFECT =====
+document.addEventListener('DOMContentLoaded', function() {
+    const rows = document.querySelectorAll('.history-table tbody tr');
+    rows.forEach(row => {
+        row.addEventListener('mouseenter', function() {
+            this.style.transform = 'scale(1.01)';
+        });
+
+        row.addEventListener('mouseleave', function() {
+            this.style.transform = 'scale(1)';
+        });
+    });
+});
+
+// ===== KEYBOARD SHORTCUTS =====
+document.addEventListener('keydown', function(e) {
+    // Alt+H: Go to Dashboard
+    if (e.altKey && e.key === 'h') {
+        window.location.href = '/';
+    }
+    // Alt+L: Go to History
+    if (e.altKey && e.key === 'l') {
+        window.location.href = '/history';
+    }
+});
+
+// ===== STATS ANIMATION =====
+function animateStats() {
+    const statValues = document.querySelectorAll('.stat-value');
+    statValues.forEach((stat, index) => {
+        stat.style.animation = `fadeIn 0.6s ease ${index * 0.1}s forwards`;
+        stat.style.opacity = '0';
+    });
+}
+
+document.addEventListener('DOMContentLoaded', animateStats);

@@ -1,25 +1,25 @@
 {% extends "base.html" %}
 
-{% block title %}Sending Status - Email Marketing{% endblock %}
+{% block title %}Estado de Envío - Email Marketing{% endblock %}
 
 {% block content %}
 <div class="status-page">
-    <h2>📤 Sending in Progress...</h2>
+    <h2>📤 Enviando en Progreso...</h2>
 
     <div class="status-container">
         <div class="status-info">
-            <p>Your emails are being sent in the background.</p>
-            <p>Check back here or visit <a href="{{ url_for('history') }}">History</a> to see final results.</p>
+            <p>✉️ Tus emails se están enviando en el fondo.</p>
+            <p>Consulta aquí o ve al <a href="{{ url_for('history') }}">Historial</a> para ver los resultados finales.</p>
         </div>
 
         <div class="status-controls">
-            <button type="button" class="btn btn-primary" onclick="location.reload()">🔄 Refresh Status</button>
-            <a href="{{ url_for('index') }}" class="btn btn-secondary">← Back to Dashboard</a>
+            <button type="button" class="btn btn-primary" onclick="location.reload()">🔄 Actualizar</button>
+            <a href="{{ url_for('index') }}" class="btn btn-secondary">← Volver al Dashboard</a>
         </div>
 
         <div id="status-logs" class="status-logs">
-            <h3>Recent Activity</h3>
-            <pre id="log-content">Loading...</pre>
+            <h3>Actividad Reciente</h3>
+            <pre id="log-content">Cargando...</pre>
         </div>
     </div>
 </div>
@@ -31,9 +31,10 @@ setInterval(function() {
         .then(r => r.json())
         .then(data => {
             document.getElementById('log-content').textContent =
-                'Sent: ' + data.sent + '\n' +
-                'Failed: ' + data.failed + '\n' +
-                'Last Updated: ' + new Date().toLocaleTimeString();
+                'Enviados: ' + data.total_sent + '\n' +
+                'Errores: ' + data.total_errors + '\n' +
+                'Tasa de éxito: ' + data.success_rate + '%\n' +
+                'Actualizado: ' + new Date().toLocaleTimeString();
         });
 }, 3000);
 </script>

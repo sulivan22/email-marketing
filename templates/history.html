@@ -1,21 +1,21 @@
 {% extends "base.html" %}
 
-{% block title %}Send History - Email Marketing{% endblock %}
+{% block title %}Historial - Email Marketing{% endblock %}
 
 {% block content %}
 <div class="history-page">
-    <h2>📜 Send History</h2>
+    <h2>📜 Historial de Envíos</h2>
 
     {% if history %}
     <table class="history-table">
         <thead>
             <tr>
-                <th>Date/Time</th>
-                <th>Sent</th>
-                <th>Failed</th>
+                <th>Fecha/Hora</th>
+                <th>Enviados</th>
+                <th>Errores</th>
                 <th>Total</th>
-                <th>Success Rate</th>
-                <th>Details</th>
+                <th>Tasa de Éxito</th>
+                <th>Detalles</th>
             </tr>
         </thead>
         <tbody>
@@ -33,7 +33,7 @@
                 <td>
                     {% if item.failed_emails %}
                     <details>
-                        <summary>Show Failed Emails ({{ item.failed|length }})</summary>
+                        <summary>Ver Errores ({{ item.failed }})</summary>
                         <ul>
                             {% for email in item.failed_emails %}
                             <li>{{ email }}</li>
@@ -41,7 +41,7 @@
                         </ul>
                     </details>
                     {% else %}
-                    <span class="text-muted">—</span>
+                    <span style="color: var(--success-color);">✓ Sin errores</span>
                     {% endif %}
                 </td>
             </tr>
@@ -49,7 +49,7 @@
         </tbody>
     </table>
     {% else %}
-    <p class="empty-state">📭 No send history yet. Send your first newsletter!</p>
+    <p class="empty-state">📭 No hay historial aún. ¡Envía tu primer newsletter!</p>
     {% endif %}
 </div>
 {% endblock %}

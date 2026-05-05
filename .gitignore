@@ -34,13 +34,15 @@ Thumbs.db
 
 # Datos de producción - NO subir listas reales de emails
 contactos/
-mails.txt
+emails/
+uploads/*
+templates/
+docs/
 
 # Claude local files
 .claude/
 CLAUDE.md
 
-emails/
-contactos/
+
 
 

@@ -1,15 +1,61 @@
-# Email Marketing Newsletter
+# 📧 EmailFlow - Email Marketing Tool
 
-Herramienta segura y configurable para enviar campañas de email masivo mediante SMTP.
+Herramienta moderna y poderosa para enviar newsletters masivas. **Disponible con interfaz web (GUI) o línea de comandos (CLI)**.
 
-## Características
+## ✨ Características
 
-- ✅ **Seguridad Crítica:** Credenciales en `.env`, nunca en el código
-- ✅ **Validación Robusta:** Patrones de email mejorados (RFC 5322)
-- ✅ **Envío por Lotes:** Configurable para evitar límites de SMTP
-- ✅ **Logging Completo:** Timestamps y detalles de cada envío
-- ✅ **Manejo de Errores:** SMTP específico y mensajes claros
-- ✅ **Flexible:** Todo configurable desde `.env`
+- ✅ **Interfaz Web Moderna** — Dashboard intuitivo, responsive y atractivo
+- ✅ **CLI Tradicional** — Para automatización y scripting
+- ✅ **Seguridad Crítica** — Credenciales en `.env`, nunca en el código
+- ✅ **Validación Robusta** — Patrones de email mejorados (RFC 5322)
+- ✅ **Envío por Lotes** — Configurable para evitar límites de SMTP
+- ✅ **Logging Completo** — Timestamps y detalles de cada envío
+- ✅ **Manejo de Errores** — SMTP específico y mensajes claros
+- ✅ **Vista Previa** — Ve cómo se verá el email antes de enviar
+- ✅ **Estadísticas** — Historial completo con tasas de éxito
+- ✅ **Flexible** — Todo configurable desde `.env`
+
+## 🚀 Inicio Rápido
+
+Elige tu forma favorita de usar EmailFlow:
+
+### 🎨 Opción 1: Interfaz Web (GUI) - Recomendado
+
+```bash
+python3 app.py
+```
+
+Luego abre: **http://localhost:5555**
+
+**Características:**
+- 📊 Dashboard con estadísticas
+- 👁️ Vista previa de emails
+- 📤 Envío en background (no bloquea)
+- 📜 Historial completo
+- 📈 Seguimiento en tiempo real
+
+**Flujo de uso:**
+1. Carga tu plantilla HTML
+2. Carga tu lista de contactos (TXT)
+3. Ajusta configuración de lotes
+4. Haz clic en "Ver Previsualización"
+5. Revisa el email
+6. Haz clic en "Enviar Ahora"
+7. Monitorea el progreso
+
+### 💻 Opción 2: Línea de Comandos (CLI) - Para automatización
+
+```bash
+python3 enviar_newsletter.py
+```
+
+**Para automatizar con cron:**
+```bash
+crontab -e
+# Añade: 0 9 * * * cd /ruta/proyecto && python3 enviar_newsletter.py
+```
+
+---
 
 ## Instalación Rápida
 
@@ -41,23 +87,50 @@ cp .env.example .env
 python3 enviar_newsletter.py
 ```
 
-## Estructura del Proyecto
+## 📁 Estructura del Proyecto
 
 ```
 email-marketing/
-├── enviar_newsletter.py      # Script principal
-├── .env.example              # Template de configuración
-├── .env                       # Tus credenciales (NO en Git ⚠️)
-├── .gitignore                # Protege secretos
-├── requirements.txt          # Dependencias Python
-├── SETUP.md                  # Guía detallada de setup
-├── app.html                  # Plantilla HTML principal
-├── emails/                   # Plantillas HTML adicionales
+├── app.py                          # Flask app (GUI) ⭐
+├── enviar_newsletter.py            # Script CLI
+├── log_parser.py                   # Parser de logs
+│
+├── requirements.txt                # Dependencias Python
+├── .env.example                    # Template de configuración
+├── .env                            # Tus credenciales (NO en Git ⚠️)
+├── .gitignore                      # Protege secretos
+│
+├── templates/                      # Templates Flask para GUI
+│   ├── base.html                   # Layout base
+│   ├── index.html                  # Dashboard
+│   ├── preview.html                # Vista previa
+│   ├── history.html                # Historial
+│   └── status.html                 # Estado en tiempo real
+│
+├── static/                         # Archivos estáticos
+│   ├── style.css                   # Estilos modernos
+│   └── script.js                   # Interactividad
+│
+├── uploads/                        # Archivos cargados por GUI
+│   ├── templates/                  # Plantillas subidas
+│   └── contacts/                   # Contactos subidos
+│
+├── emails/                         # Plantillas ejemplo
+│   ├── app.html
 │   ├── newsletter.html
-├── contactos/                # Listas de contactos
-│   ├── campaña1.txt
-│   └── campaña2.txt
-└── mails.txt                 # Destinatarios actuales
+│   ├── newsletter-2.html
+│   └── ig.html
+│
+├── contactos/                      # Listas de contactos ejemplo
+│   ├── alboroto.txt
+│   └── esimUser.txt
+│
+├── mails.txt                       # Lista por defecto (CLI)
+├── app.html                        # Plantilla por defecto (CLI)
+├── enviados.log                    # Log de enviados
+├── errores.log                     # Log de errores
+│
+└── README.md                       # Este archivo
 ```
 
 ## Configuración

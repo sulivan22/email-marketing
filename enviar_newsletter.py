@@ -89,8 +89,8 @@ def registrar(mensaje, nivel="INFO"):
 email_from_name = os.getenv("EMAIL_FROM_NAME")
 email_from_address = os.getenv("EMAIL_FROM_ADDRESS")
 email_subject = os.getenv("EMAIL_SUBJECT")
-batch_size = int(os.getenv("BATCH_SIZE"))
-batch_delay = int(os.getenv("BATCH_DELAY_SECONDS"))
+batch_size = int(os.getenv("BATCH_SIZE", "50"))
+batch_delay = int(os.getenv("BATCH_DELAY_SECONDS", "30"))
 
 # === ENVÍO POR BLOQUES ===
 enviados = []

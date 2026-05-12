@@ -1,5 +1,6 @@
 import os
 import subprocess
+import sys
 import re
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from werkzeug.utils import secure_filename
@@ -126,7 +127,7 @@ def send():
 
         # Launch subprocess in background (non-blocking)
         subprocess.Popen(
-            ['python', 'enviar_newsletter.py'],
+            [sys.executable, 'enviar_newsletter.py'],
             env=env,
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL
